@@ -174,16 +174,6 @@ button.next-btn {
   font-size: 0.9rem;
   color: #444;
 }
-.dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-.dot.pink { background: #ffb6c1; }
-.dot.blue { background: #add8e6; }
-.dot.yellow { background: #f9e79f; }
 
 .star {
   font-size: 60px;
