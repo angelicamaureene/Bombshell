@@ -93,7 +93,7 @@ window.addEventListener('DOMContentLoaded', () => {
             vy: (Math.random() - 0.5) * 1,
             radius: 2,
             color: colors[Math.floor(Math.random() * colors.length)],
-            life: 200
+            life: 300
           });
         }
       }
@@ -117,7 +117,7 @@ window.addEventListener('DOMContentLoaded', () => {
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.02;
+       if (p.life < 200) p.vy += 0.02;
         p.life--;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
