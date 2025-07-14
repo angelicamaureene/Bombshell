@@ -86,14 +86,29 @@ button.next-btn {
 .letter {
   margin-top: 20px;
   max-width: 600px;
+  max-height: 60vh; /* NEW: restrict height */
+  overflow-y: auto;  /* NEW: make scrollable */
   background: #fff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
   color: #333;
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.6;
   animation: fadeIn 1s ease forwards;
+}
+
+/* Optional: Soft custom scrollbar */
+.letter::-webkit-scrollbar {
+  width: 8px;
+}
+.letter::-webkit-scrollbar-track {
+  background: #ffe6f0;
+  border-radius: 10px;
+}
+.letter::-webkit-scrollbar-thumb {
+  background: #ff99c8;
+  border-radius: 10px;
 }
 
 .jar-wrapper {
