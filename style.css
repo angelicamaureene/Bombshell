@@ -117,10 +117,10 @@ button.next-btn {
 
 .notes-container {
   position: absolute;
-  top: 15%;
+  top: 20%;  /* was 15%, now moved down */
   left: 13%;
   width: 74%;
-  height: 70%;
+  height: 65%; /* shrink height a bit to keep inside jar */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -128,6 +128,7 @@ button.next-btn {
   z-index: 2;
   pointer-events: auto;
 }
+
 
 .note-heart {
   width: 16px;
