@@ -98,8 +98,8 @@ button.next-btn {
 
 .jar-wrapper {
   position: relative;
-  width: 450px;
-  height: 500px;
+  width: 500px;
+  height: 400px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
