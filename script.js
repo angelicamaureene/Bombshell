@@ -30,7 +30,15 @@ window.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.classList.add('note-heart', note.category);
       div.title = 'Click to reveal';
-      div.addEventListener('click', () => alert(note.message));
+      div.addEventListener('click', () => {
+        document.getElementById('modalMessage').textContent = note.message;
+        document.getElementById('noteModal').classList.remove('hidden');
+      });
+      window.addEventListener('click', (e) => {
+        if (e.target.id === 'noteModal') {
+    document.getElementById('noteModal').classList.add('hidden');
+  }
+});
       notesContainer.appendChild(div);
     });
   }
