@@ -100,32 +100,37 @@ button.next-btn {
   position: relative;
   width: 300px;
   height: 400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .jar-image {
-  position: absolute;
   width: 100%;
-  height: 100%;
+  height: auto;
   z-index: 1;
 }
+
 .notes-container {
   position: absolute;
-  top: 60px;
-  left: 40px;
-  right: 40px;
-  bottom: 60px;
-  z-index: 2;
+  width: 75%;
+  height: 75%;
+  top: 12%;
+  left: 12%;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
   justify-content: center;
-  align-content: center;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none; /* hearts won't block jar clicks */
 }
+
 .note-heart {
   width: 20px;
   height: 20px;
   position: relative;
   transform: rotate(-45deg);
-  cursor: pointer;
   margin: 2px;
 }
 
@@ -138,27 +143,6 @@ button.next-btn {
   position: absolute;
 }
 
-/* Pink Heart */
-.note-heart.pink,
-.note-heart.pink::before,
-.note-heart.pink::after {
-  background: #ffb6c1;
-}
-
-/* Blue Heart */
-.note-heart.blue,
-.note-heart.blue::before,
-.note-heart.blue::after {
-  background: #add8e6;
-}
-
-/* Yellow Heart */
-.note-heart.yellow,
-.note-heart.yellow::before,
-.note-heart.yellow::after {
-  background: #f9e79f;
-}
-
 .note-heart::before {
   top: -10px;
   left: 0;
@@ -169,10 +153,22 @@ button.next-btn {
   top: 0;
 }
 
-.legend {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #444;
+.note-heart.pink,
+.note-heart.pink::before,
+.note-heart.pink::after {
+  background: #ffb6c1;
+}
+
+.note-heart.blue,
+.note-heart.blue::before,
+.note-heart.blue::after {
+  background: #add8e6;
+}
+
+.note-heart.yellow,
+.note-heart.yellow::before,
+.note-heart.yellow::after {
+  background: #f9e79f;
 }
 
 .star {
