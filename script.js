@@ -103,7 +103,7 @@ window.addEventListener('DOMContentLoaded', () => {
             vy: (Math.random() - 0.5) * 1,
             radius: 2,
             color: colors[Math.floor(Math.random() * colors.length)],
-            life: 1000
+            life: 1500
           });
         }
       }
