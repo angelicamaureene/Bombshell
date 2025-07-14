@@ -120,15 +120,54 @@ button.next-btn {
   justify-content: center;
   align-content: center;
 }
-.note-roll {
-  width: 16px;
-  height: 40px;
-  border-radius: 4px;
+.note-heart {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  transform: rotate(-45deg);
   cursor: pointer;
+  margin: 2px;
 }
-.note-roll.pink { background: #ffb6c1; }
-.note-roll.blue { background: #add8e6; }
-.note-roll.yellow { background: #f9e79f; }
+
+.note-heart::before,
+.note-heart::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* Pink Heart */
+.note-heart.pink,
+.note-heart.pink::before,
+.note-heart.pink::after {
+  background: #ffb6c1;
+}
+
+/* Blue Heart */
+.note-heart.blue,
+.note-heart.blue::before,
+.note-heart.blue::after {
+  background: #add8e6;
+}
+
+/* Yellow Heart */
+.note-heart.yellow,
+.note-heart.yellow::before,
+.note-heart.yellow::after {
+  background: #f9e79f;
+}
+
+.note-heart::before {
+  top: -10px;
+  left: 0;
+}
+
+.note-heart::after {
+  left: 10px;
+  top: 0;
+}
 
 .legend {
   margin-top: 20px;
