@@ -27,7 +27,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   notes.forEach(note => {
     const div = document.createElement('div');
-    div.classList.add('note-roll', note.category);
+    div.classList.add('note-heart');
     div.title = 'Click to reveal';
     div.addEventListener('click', () => alert(note.message));
     notesContainer.appendChild(div);
@@ -106,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const x = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
         const y = Math.random() * canvas.height * 0.5 + canvas.height * 0.1;
         createParticles(x, y);
-      }, i * 500);
+      }, i * 1000);
     }
 
     let start = Date.now();
@@ -125,10 +125,11 @@ window.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
       });
       particles = particles.filter(p => p.life > 0);
-      if (elapsed < 15000 || particles.length > 0) {
+      if (elapsed < 30000 || particles.length > 0) {
         requestAnimationFrame(animate);
       }
     }
     animate();
   }
 });
+
