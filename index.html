@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Anniversary</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Screen 1: Happy Anniversary -->
+  <div class="screen" id="screen1">
+    <h1>Happy Anniversary</h1>
+    <div class="polaroid">
+      <img src="assets/your-photo.jpg" alt="Us Together" />
+      <p>Us 💖</p>
+    </div>
+  </div>
+
+  <!-- Screen 2: Bouquet -->
+  <div class="screen hidden" id="screen2">
+    <img class="bouquet" src="assets/your-bouquet-image.png" alt="Bouquet" />
+    <div class="message">
+      I may not be there to physically give you a bouquet myself,<br>
+      but please accept these and I'll give you your flowers when you land back 🌸
+    </div>
+  </div>
+
+  <!-- Screen 3: Heart and Letter -->
+  <div class="screen hidden" id="screen3">
+    <div class="heart" id="heart"></div>
+    <div class="letter hidden" id="letter">
+      <p>[Insert your beautiful letter here]</p>
+    </div>
+  </div>
+
+  <!-- Screen 4: Jar with Notes -->
+  <div class="screen hidden" id="screen4">
+    <h2>Open when...</h2>
+    <img src="assets/jar.png" class="jar-image" alt="Jar">
+    <div class="notes-container" id="notes-container"></div>
+    <div class="legend">
+      <div><span class="dot pink"></span> you’re feeling happy</div>
+      <div><span class="dot blue"></span> you’re feeling sad or down</div>
+      <div><span class="dot yellow"></span> you need a little sunshine</div>
+    </div>
+  </div>
+
+  <!-- Screen 5: Star Icon -->
+  <div class="screen hidden" id="screen5">
+    <h2>Almost There...</h2>
+    <div class="star" id="startFireworks">★</div>
+  </div>
+
+  <!-- Screen 6: Fireworks Finale -->
+  <div class="screen hidden" id="screen6">
+    <canvas id="fireworksCanvas"></canvas>
+  </div>
+
+  <script src="notes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
