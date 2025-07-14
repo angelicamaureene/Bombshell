@@ -65,11 +65,10 @@ const notes = Array.from({ length: 62 }, (_, i) => {
   { id: 61, category: "pink", message: "I love how you make me feel safe enough to be childish and carefree. How you bring out the inner child in me and how refreshing it feels to have the weight of being a mature individual be lifted off." },
   { id: 62, category: "blue", message: "I love who you are as a person. How you’re so confident in yourself. How you’re just an amazing person through and through, I love all of it." }
 ];
-  const msgList = messages[category];
-  return {
-    id: i + 1,
-    category,
-    message: msgList[i % msgList.length]
-  };
+
+  notes.forEach((note, i) => {
+  note.category = categories[i % categories.length];
 });
+  
+
 
