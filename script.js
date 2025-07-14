@@ -11,6 +11,20 @@ window.addEventListener('DOMContentLoaded', () => {
   const heart = document.getElementById('heart');
   const letter = document.getElementById('letter');
   const notesContainer = document.getElementById('notes-container');
+  
+  if (typeof notes !== 'undefined' && Array.isArray(notes)) {
+  notes.forEach(note => {
+    const div = document.createElement('div');
+    div.classList.add('note-heart', note.category);
+    div.title = 'Click to reveal';
+    div.addEventListener('click', () => {
+      document.getElementById('modalMessage').textContent = note.message;
+      document.getElementById('noteModal').classList.remove('hidden');
+    });
+    notesContainer.appendChild(div);
+  });
+}
+
   const startFireworks = document.getElementById('startFireworks');
 
   let currentScreen = 0;
