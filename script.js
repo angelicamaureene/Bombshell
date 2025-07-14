@@ -25,13 +25,15 @@ window.addEventListener('DOMContentLoaded', () => {
     letter.classList.remove('hidden');
   });
 
-  notes.forEach(note => {
-    const div = document.createElement('div');
-    div.classList.add('note-heart');
-    div.title = 'Click to reveal';
-    div.addEventListener('click', () => alert(note.message));
-    notesContainer.appendChild(div);
-  });
+  if (typeof notes !== 'undefined' && Array.isArray(notes)) {
+    notes.forEach(note => {
+      const div = document.createElement('div');
+      div.classList.add('note-heart', note.category);
+      div.title = 'Click to reveal';
+      div.addEventListener('click', () => alert(note.message));
+      notesContainer.appendChild(div);
+    });
+  }
 
   startFireworks.addEventListener('click', () => {
     transitionTo(5);
@@ -80,12 +82,12 @@ window.addEventListener('DOMContentLoaded', () => {
     textCtx.fillText(text, centerX, centerY);
 
     const imageData = textCtx.getImageData(0, 0, textCanvas.width, textCanvas.height);
-    const gap = 6; // space between particles
+    const gap = 6;
 
     for (let y = 0; y < textCanvas.height; y += gap) {
       for (let x = 0; x < textCanvas.width; x += gap) {
         const index = (y * textCanvas.width + x) * 4;
-        if (imageData.data[index + 3] > 128) { // visible pixel
+        if (imageData.data[index + 3] > 128) {
           particles.push({
             x: x,
             y: y,
@@ -93,7 +95,7 @@ window.addEventListener('DOMContentLoaded', () => {
             vy: (Math.random() - 0.5) * 1,
             radius: 2,
             color: colors[Math.floor(Math.random() * colors.length)],
-            life: 500
+            life: 300
           });
         }
       }
@@ -117,7 +119,7 @@ window.addEventListener('DOMContentLoaded', () => {
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-       if (p.life < 200) p.vy += 0.02;
+        if (p.life < 200) p.vy += 0.02;
         p.life--;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
@@ -132,4 +134,3 @@ window.addEventListener('DOMContentLoaded', () => {
     animate();
   }
 });
-
