@@ -32,42 +32,54 @@ window.addEventListener('DOMContentLoaded', () => {
     letter.classList.remove('hidden');
   });
 
-  // You need to have 'notes' defined globally or imported from notes.js
-  // Example notes array:
-  // const notes = [{ message: "...", category: "pink" }, ...];
+  function generateHeartCoords(numPoints) {
+  const coords = [];
+  for (let i = 0; i < numPoints; i++) {
+    // t goes from 0 to 2*PI evenly spaced
+    const t = (i / numPoints) * 2 * Math.PI;
 
-  // Coordinates normalized for the heart shape, each between 0 and 1
-  const coords = [
-    [0.5, 0.24],[0.5, 0.23],[0.50, 0.21],[0.51, 0.18],[0.53, 0.14],[0.56, 0.11],
-    [0.59, 0.09],[0.63, 0.08],[0.66, 0.08],[0.69, 0.09],[0.72, 0.11],[0.75, 0.15],
-    [0.77, 0.19],[0.79, 0.24],[0.80, 0.30],[0.80, 0.35],[0.78, 0.40],[0.76, 0.45],
-    [0.73, 0.50],[0.69, 0.54],[0.65, 0.57],[0.60, 0.59],[0.55, 0.60],[0.50, 0.60],
-    [0.45, 0.60],[0.40, 0.59],[0.35, 0.57],[0.31, 0.54],[0.27, 0.50],[0.24, 0.45],
-    [0.22, 0.40],[0.20, 0.35],[0.20, 0.30],[0.21, 0.24],[0.23, 0.19],[0.25, 0.15],
-    [0.28, 0.11],[0.31, 0.09],[0.34, 0.08],[0.37, 0.08],[0.41, 0.09],[0.44, 0.11],
-    [0.47, 0.14],[0.49, 0.18],[0.50, 0.21],[0.51, 0.23],[0.5, 0.25],[0.52, 0.28],
-    [0.54, 0.31],[0.56, 0.33],[0.58, 0.35],[0.60, 0.37],[0.62, 0.39],[0.64, 0.41],
-    [0.66, 0.42],[0.68, 0.44],[0.70, 0.45],[0.72, 0.46],[0.74, 0.47],[0.76, 0.48],
-    [0.78, 0.49],[0.79, 0.50]
-  ];
+    // Parametric heart formula
+    const xRaw = 16 * Math.pow(Math.sin(t), 3);
+    const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
 
-  notes.slice(0, coords.length).forEach((note, index) => {
-    const [x, y] = coords[index];
-    const div = document.createElement('div');
-    div.classList.add('note-heart', note.category); // note.category used for color coding
-    div.title = 'Click to reveal';
-    div.style.position = 'absolute';
-    div.style.left = `${x * 100}%`;
-    div.style.top = `${y * 100}%`;
-    div.addEventListener('click', () => {
-      const modal = document.getElementById('noteModal');
-      const modalMessage = document.getElementById('modalMessage');
-      modalMessage.textContent = note.message;
-      modal.classList.remove('hidden');
-    });
+    coords.push({ xRaw, yRaw });
+  }
 
-    notesContainer.appendChild(div);
+  // Find min and max for normalization
+  const xs = coords.map(p => p.xRaw);
+  const ys = coords.map(p => p.yRaw);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  const minY = Math.min(...ys);
+  const maxY = Math.max(...ys);
+
+  // Normalize to 0-1 range and flip Y (because CSS top=0 is at the top)
+  return coords.map(p => ({
+    x: (p.xRaw - minX) / (maxX - minX),
+    y: 1 - (p.yRaw - minY) / (maxY - minY)
+  }));
+}
+
+ // Assuming 'notes' is loaded and contains your note objects
+const coords = generateHeartCoords(notes.length);
+
+notes.slice(0, coords.length).forEach((note, index) => {
+  const { x, y } = coords[index];
+  const div = document.createElement('div');
+  div.classList.add('note-heart', note.category);
+  div.title = 'Click to reveal';
+  div.style.position = 'absolute';
+  div.style.left = `${x * 100}%`;
+  div.style.top = `${y * 100}%`;
+  div.addEventListener('click', () => {
+    const modal = document.getElementById('noteModal');
+    const modalMessage = document.getElementById('modalMessage');
+    modalMessage.textContent = note.message;
+    modal.classList.remove('hidden');
   });
+
+  notesContainer.appendChild(div);
+});
 
   // Close modal when clicking outside modal content
   window.addEventListener('click', (e) => {
