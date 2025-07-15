@@ -7,7 +7,14 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('screen5'),
     document.getElementById('screen6')
   ];
-
+  
+function transitionTo(screenIndex) {
+  screens.forEach((screen, i) => {
+    screen.classList.toggle('hidden', i !== screenIndex);
+  });
+  currentScreen = screenIndex;
+}
+  
   const heart = document.getElementById('heart');
   const letter = document.getElementById('letter');
   const notesContainer = document.getElementById('notes-container');
@@ -71,13 +78,6 @@ window.addEventListener('DOMContentLoaded', () => {
     launchFireworks();
     drawTextFireworks('Happy 2 Months!', canvas.width / 2, canvas.height / 2);
   });
-
-  function transitionTo(screenIndex) {
-    screens.forEach((s, i) => {
-      s.classList.toggle('hidden', i !== screenIndex);
-    });
-    currentScreen = screenIndex;
-  }
 
   // Fireworks
   const canvas = document.getElementById('fireworksCanvas');
