@@ -32,20 +32,29 @@ window.addEventListener('DOMContentLoaded', () => {
     letter.classList.remove('hidden');
   });
 
-  function generateHeartCoords(numPoints) {
+  function repelFromPoint(x, y, centerX, centerY, strength) {
+  const dx = x - centerX;
+  const dy = y - centerY;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+
+  if (dist === 0) return { x, y }; // avoid division by zero
+
+  const factor = strength / dist;
+  return {
+    x: x + dx * factor,
+    y: y + dy * factor
+  };
+}
+
+function generateHeartCoords(numPoints) {
   const coords = [];
   for (let i = 0; i < numPoints; i++) {
-    // t goes from 0 to 2*PI evenly spaced
     const t = (i / numPoints) * 2 * Math.PI;
-
-    // Parametric heart formula
     const xRaw = 16 * Math.pow(Math.sin(t), 3);
     const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-
     coords.push({ xRaw, yRaw });
   }
 
-  // Find min and max for normalization
   const xs = coords.map(p => p.xRaw);
   const ys = coords.map(p => p.yRaw);
   const minX = Math.min(...xs);
@@ -53,20 +62,34 @@ window.addEventListener('DOMContentLoaded', () => {
   const minY = Math.min(...ys);
   const maxY = Math.max(...ys);
 
-  // Normalize to 0-1 range and flip Y (because CSS top=0 is at the top)
   return coords.map(p => ({
     x: (p.xRaw - minX) / (maxX - minX),
     y: 1 - (p.yRaw - minY) / (maxY - minY)
   }));
 }
 
- // Assuming 'notes' is loaded and contains your note objects
+// === Place the notes on the heart ===
 const coords = generateHeartCoords(notes.length);
 
 notes.slice(0, coords.length).forEach((note, index) => {
-  const jitterAmount = 0.015; // small adjustment (1.5%)
-  const x = Math.min(1, Math.max(0, coords[index].x + (Math.random() - 0.5) * jitterAmount));
-  const y = Math.min(1, Math.max(0, coords[index].y + (Math.random() - 0.5) * jitterAmount));
+  const jitterAmount = 0.015;
+  let x = coords[index].x;
+  let y = coords[index].y;
+
+  // Apply jitter
+  x += (Math.random() - 0.5) * jitterAmount;
+  y += (Math.random() - 0.5) * jitterAmount;
+
+  // Repel from very center-top (where overlap happens)
+  const repelTop = repelFromPoint(x, y, 0.5, 0.15, 0.02);
+
+  // Repel from center-bottom (point of heart)
+  const repelBottom = repelFromPoint(repelTop.x, repelTop.y, 0.5, 0.95, 0.02);
+
+  // Clamp final position inside container
+  x = Math.min(1, Math.max(0, repelBottom.x));
+  y = Math.min(1, Math.max(0, repelBottom.y));
+
   const div = document.createElement('div');
   div.classList.add('note-heart', note.category);
   div.title = 'Click to reveal';
@@ -82,6 +105,7 @@ notes.slice(0, coords.length).forEach((note, index) => {
 
   notesContainer.appendChild(div);
 });
+
 
   // Close modal when clicking outside modal content
   window.addEventListener('click', (e) => {
