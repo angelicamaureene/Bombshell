@@ -38,6 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
     [0.66, 0.42],[0.68, 0.44],[0.70, 0.45],[0.72, 0.46],[0.74, 0.47],[0.76, 0.48],
     [0.78, 0.49],[0.79, 0.50]
   ];
+  const notesContainer = document.getElementById('notes-container');
 
   notes.slice(0, coords.length).forEach((note, index) => {
     const [x, y] = coords[index];
@@ -48,11 +49,15 @@ window.addEventListener('DOMContentLoaded', () => {
     div.style.left = `${x * 100}%`;
     div.style.top = `${y * 100}%`;
     div.addEventListener('click', () => {
-      document.getElementById('modalMessage').textContent = note.message;
-      document.getElementById('noteModal').classList.remove('hidden');
+      const modal = document.getElementById('noteModal');
+      const modalMessage = document.getElementById('modalMessage');
+      modalMessage.textContent = note.message;
+      modal.classList.remove('hidden');
     });
-    notesContainer.appendChild(div);
-  });
+
+  notesContainer.appendChild(div);
+});
+
 
   // Close modal when clicking outside
   window.addEventListener('click', (e) => {
