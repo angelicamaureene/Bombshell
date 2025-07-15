@@ -11,20 +11,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const heart = document.getElementById('heart');
   const letter = document.getElementById('letter');
   const notesContainer = document.getElementById('notes-container');
-  
-  if (typeof notes !== 'undefined' && Array.isArray(notes)) {
-  notes.forEach(note => {
-    const div = document.createElement('div');
-    div.classList.add('note-heart', note.category);
-    div.title = 'Click to reveal';
-    div.addEventListener('click', () => {
-      document.getElementById('modalMessage').textContent = note.message;
-      document.getElementById('noteModal').classList.remove('hidden');
-    });
-    notesContainer.appendChild(div);
-  });
-}
-
   const startFireworks = document.getElementById('startFireworks');
 
   let currentScreen = 0;
@@ -39,23 +25,41 @@ window.addEventListener('DOMContentLoaded', () => {
     letter.classList.remove('hidden');
   });
 
-  if (typeof notes !== 'undefined' && Array.isArray(notes)) {
-    notes.forEach(note => {
-      const div = document.createElement('div');
-      div.classList.add('note-heart', note.category);
-      div.title = 'Click to reveal';
-      div.addEventListener('click', () => {
-        document.getElementById('modalMessage').textContent = note.message;
-        document.getElementById('noteModal').classList.remove('hidden');
-      });
-      window.addEventListener('click', (e) => {
-        if (e.target.id === 'noteModal') {
-    document.getElementById('noteModal').classList.add('hidden');
-  }
-});
-      notesContainer.appendChild(div);
+  const coords = [
+    [0.5, 0.24],[0.5, 0.23],[0.50, 0.21],[0.51, 0.18],[0.53, 0.14],[0.56, 0.11],
+    [0.59, 0.09],[0.63, 0.08],[0.66, 0.08],[0.69, 0.09],[0.72, 0.11],[0.75, 0.15],
+    [0.77, 0.19],[0.79, 0.24],[0.80, 0.30],[0.80, 0.35],[0.78, 0.40],[0.76, 0.45],
+    [0.73, 0.50],[0.69, 0.54],[0.65, 0.57],[0.60, 0.59],[0.55, 0.60],[0.50, 0.60],
+    [0.45, 0.60],[0.40, 0.59],[0.35, 0.57],[0.31, 0.54],[0.27, 0.50],[0.24, 0.45],
+    [0.22, 0.40],[0.20, 0.35],[0.20, 0.30],[0.21, 0.24],[0.23, 0.19],[0.25, 0.15],
+    [0.28, 0.11],[0.31, 0.09],[0.34, 0.08],[0.37, 0.08],[0.41, 0.09],[0.44, 0.11],
+    [0.47, 0.14],[0.49, 0.18],[0.50, 0.21],[0.51, 0.23],[0.5, 0.25],[0.52, 0.28],
+    [0.54, 0.31],[0.56, 0.33],[0.58, 0.35],[0.60, 0.37],[0.62, 0.39],[0.64, 0.41],
+    [0.66, 0.42],[0.68, 0.44],[0.70, 0.45],[0.72, 0.46],[0.74, 0.47],[0.76, 0.48],
+    [0.78, 0.49],[0.79, 0.50]
+  ];
+
+  notes.slice(0, coords.length).forEach((note, index) => {
+    const [x, y] = coords[index];
+    const div = document.createElement('div');
+    div.classList.add('note-heart', note.category);
+    div.title = 'Click to reveal';
+    div.style.position = 'absolute';
+    div.style.left = `${x * 100}%`;
+    div.style.top = `${y * 100}%`;
+    div.addEventListener('click', () => {
+      document.getElementById('modalMessage').textContent = note.message;
+      document.getElementById('noteModal').classList.remove('hidden');
     });
-  }
+    notesContainer.appendChild(div);
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target.id === 'noteModal') {
+      document.getElementById('noteModal').classList.add('hidden');
+    }
+  });
 
   startFireworks.addEventListener('click', () => {
     transitionTo(5);
@@ -70,6 +74,7 @@ window.addEventListener('DOMContentLoaded', () => {
     currentScreen = screenIndex;
   }
 
+  // Fireworks
   const canvas = document.getElementById('fireworksCanvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
@@ -156,3 +161,4 @@ window.addEventListener('DOMContentLoaded', () => {
     animate();
   }
 });
+
