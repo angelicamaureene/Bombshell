@@ -113,11 +113,11 @@ button.next-btn {
 
 .heart-note-grid {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 80vw;       /* Make it responsive */
+  max-width: 400px;  /* Keep a reasonable size */
+  height: 80vw;
+  max-height: 400px;
   margin: 0 auto;
-  /* optional border for debugging */
-  /* border: 1px solid red; */
 }
 
 .note-heart {
