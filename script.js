@@ -32,6 +32,11 @@ window.addEventListener('DOMContentLoaded', () => {
     letter.classList.remove('hidden');
   });
 
+  // You need to have 'notes' defined globally or imported from notes.js
+  // Example notes array:
+  // const notes = [{ message: "...", category: "pink" }, ...];
+
+  // Coordinates normalized for the heart shape, each between 0 and 1
   const coords = [
     [0.5, 0.24],[0.5, 0.23],[0.50, 0.21],[0.51, 0.18],[0.53, 0.14],[0.56, 0.11],
     [0.59, 0.09],[0.63, 0.08],[0.66, 0.08],[0.69, 0.09],[0.72, 0.11],[0.75, 0.15],
@@ -49,7 +54,7 @@ window.addEventListener('DOMContentLoaded', () => {
   notes.slice(0, coords.length).forEach((note, index) => {
     const [x, y] = coords[index];
     const div = document.createElement('div');
-    div.classList.add('note-heart', note.category);
+    div.classList.add('note-heart', note.category); // note.category used for color coding
     div.title = 'Click to reveal';
     div.style.position = 'absolute';
     div.style.left = `${x * 100}%`;
@@ -64,23 +69,14 @@ window.addEventListener('DOMContentLoaded', () => {
     notesContainer.appendChild(div);
   });
 
-  // Close modal when clicking outside
+  // Close modal when clicking outside modal content
   window.addEventListener('click', (e) => {
     if (e.target.id === 'noteModal') {
       document.getElementById('noteModal').classList.add('hidden');
     }
   });
 
-});
-
-
-  startFireworks.addEventListener('click', () => {
-    transitionTo(5);
-    launchFireworks();
-    drawTextFireworks('Happy 2 Months!', canvas.width / 2, canvas.height / 2);
-  });
-
-  // Fireworks
+  // Fireworks canvas setup
   const canvas = document.getElementById('fireworksCanvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
@@ -152,7 +148,7 @@ window.addEventListener('DOMContentLoaded', () => {
       particles.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
-        if (p.life < 200) p.vy += 0.02;
+        if (p.life < 200) p.vy += 0.02; // gravity
         p.life--;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
@@ -166,5 +162,19 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     animate();
   }
+
+  // Moved inside DOMContentLoaded to access startFireworks element
+  startFireworks.addEventListener('click', () => {
+    transitionTo(5); // Show fireworks screen (screen6 index 5)
+    launchFireworks();
+    drawTextFireworks('Happy 2 Months!', canvas.width / 2, canvas.height / 2);
+  });
+
+  // Optional: Resize canvas on window resize
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
 });
+
 
