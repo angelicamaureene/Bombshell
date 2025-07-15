@@ -48,13 +48,33 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function generateHeartCoords(numPoints) {
   const coords = [];
-  for (let i = 0; i < numPoints; i++) {
-    const t = (i / numPoints) * 2 * Math.PI;
+  let t = 0;
+  let step = 2 * Math.PI / (numPoints * 2); // finer sampling
+
+  // Smarter sampling: skip crevice and bottom
+  while (coords.length < numPoints && t <= 2 * Math.PI) {
     const xRaw = 16 * Math.pow(Math.sin(t), 3);
     const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+
+    const tooCloseToCrevice = Math.abs(t - Math.PI) < 0.08; // avoid crevice
+    const tooCloseToBottom = t > 1.95 * Math.PI || t < 0.05 * Math.PI; // avoid pointy bottom
+
+    if (!tooCloseToCrevice && !tooCloseToBottom) {
+      coords.push({ xRaw, yRaw });
+    }
+
+    t += step;
+  }
+
+  // Fill any remaining
+  while (coords.length < numPoints) {
+    const angle = Math.random() * 2 * Math.PI;
+    const xRaw = 16 * Math.pow(Math.sin(angle), 3);
+    const yRaw = 13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle);
     coords.push({ xRaw, yRaw });
   }
 
+  // Normalize to 0–1
   const xs = coords.map(p => p.xRaw);
   const ys = coords.map(p => p.yRaw);
   const minX = Math.min(...xs);
@@ -72,23 +92,23 @@ function generateHeartCoords(numPoints) {
 const coords = generateHeartCoords(notes.length);
 
 notes.slice(0, coords.length).forEach((note, index) => {
-  const jitterAmount = 0.015;
-  let x = coords[index].x;
-  let y = coords[index].y;
+  let { x, y } = coords[index];
 
-  // Apply jitter
+  // Jitter
+  const jitterAmount = 0.015;
   x += (Math.random() - 0.5) * jitterAmount;
   y += (Math.random() - 0.5) * jitterAmount;
 
-  // Repel from very center-top (where overlap happens)
-  const repelTop = repelFromPoint(x, y, 0.5, 0.15, 0.02);
+  // Repel from top crevice and bottom tip
+  x = repelFromPoint(x, y, 0.5, 0.15, 0.02).x;
+  y = repelFromPoint(x, y, 0.5, 0.15, 0.02).y;
 
-  // Repel from center-bottom (point of heart)
-  const repelBottom = repelFromPoint(repelTop.x, repelTop.y, 0.5, 0.95, 0.02);
+  x = repelFromPoint(x, y, 0.5, 0.95, 0.02).x;
+  y = repelFromPoint(x, y, 0.5, 0.95, 0.02).y;
 
-  // Clamp final position inside container
-  x = Math.min(1, Math.max(0, repelBottom.x));
-  y = Math.min(1, Math.max(0, repelBottom.y));
+  // Clamp
+  x = Math.min(1, Math.max(0, x));
+  y = Math.min(1, Math.max(0, y));
 
   const div = document.createElement('div');
   div.classList.add('note-heart', note.category);
