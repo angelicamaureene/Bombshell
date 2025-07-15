@@ -161,7 +161,7 @@ notes.slice(0, coords.length).forEach((note, index) => {
             vy: (Math.random() - 0.5) * 1,
             radius: 2,
             color: colors[Math.floor(Math.random() * colors.length)],
-            life: 2000
+            life: 4000
           });
         }
       }
