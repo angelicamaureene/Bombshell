@@ -64,7 +64,9 @@ window.addEventListener('DOMContentLoaded', () => {
 const coords = generateHeartCoords(notes.length);
 
 notes.slice(0, coords.length).forEach((note, index) => {
-  const { x, y } = coords[index];
+  const jitterAmount = 0.015; // small adjustment (1.5%)
+  const x = Math.min(1, Math.max(0, coords[index].x + (Math.random() - 0.5) * jitterAmount));
+  const y = Math.min(1, Math.max(0, coords[index].y + (Math.random() - 0.5) * jitterAmount));
   const div = document.createElement('div');
   div.classList.add('note-heart', note.category);
   div.title = 'Click to reveal';
