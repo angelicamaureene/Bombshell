@@ -70,7 +70,6 @@ notes.forEach((note, i) => {
   note.category = categories[i % categories.length];
 });
 
-export { notes };
   
 
 
