@@ -116,6 +116,8 @@ button.next-btn {
   width: 400px;
   height: 400px;
   margin: 0 auto;
+  /* optional border for debugging */
+  /* border: 1px solid red; */
 }
 
 .note-heart {
