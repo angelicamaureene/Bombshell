@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('screen6')
   ];
 
-  let currentScreen = 0;  // <-- Move this here, before usage
+  let currentScreen = 0;
 
   function transitionTo(screenIndex) {
     screens.forEach((screen, i) => {
@@ -31,7 +31,6 @@ window.addEventListener('DOMContentLoaded', () => {
   heart.addEventListener('click', () => {
     letter.classList.remove('hidden');
   });
-});
 
   const coords = [
     [0.5, 0.24],[0.5, 0.23],[0.50, 0.21],[0.51, 0.18],[0.53, 0.14],[0.56, 0.11],
@@ -46,7 +45,6 @@ window.addEventListener('DOMContentLoaded', () => {
     [0.66, 0.42],[0.68, 0.44],[0.70, 0.45],[0.72, 0.46],[0.74, 0.47],[0.76, 0.48],
     [0.78, 0.49],[0.79, 0.50]
   ];
-  const notesContainer = document.getElementById('notes-container');
 
   notes.slice(0, coords.length).forEach((note, index) => {
     const [x, y] = coords[index];
@@ -63,9 +61,8 @@ window.addEventListener('DOMContentLoaded', () => {
       modal.classList.remove('hidden');
     });
 
-  notesContainer.appendChild(div);
-});
-
+    notesContainer.appendChild(div);
+  });
 
   // Close modal when clicking outside
   window.addEventListener('click', (e) => {
@@ -73,6 +70,9 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('noteModal').classList.add('hidden');
     }
   });
+
+});
+
 
   startFireworks.addEventListener('click', () => {
     transitionTo(5);
