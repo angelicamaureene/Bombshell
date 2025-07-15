@@ -7,20 +7,15 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('screen5'),
     document.getElementById('screen6')
   ];
-  
-function transitionTo(screenIndex) {
-  screens.forEach((screen, i) => {
-    screen.classList.toggle('hidden', i !== screenIndex);
-  });
-  currentScreen = screenIndex;
-}
-  
-  const heart = document.getElementById('heart');
-  const letter = document.getElementById('letter');
-  const notesContainer = document.getElementById('notes-container');
-  const startFireworks = document.getElementById('startFireworks');
 
-  let currentScreen = 0;
+  let currentScreen = 0;  // <-- Move this here, before usage
+
+  function transitionTo(screenIndex) {
+    screens.forEach((screen, i) => {
+      screen.classList.toggle('hidden', i !== screenIndex);
+    });
+    currentScreen = screenIndex;
+  }
 
   document.querySelectorAll('.next-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -28,9 +23,15 @@ function transitionTo(screenIndex) {
     });
   });
 
+  const heart = document.getElementById('heart');
+  const letter = document.getElementById('letter');
+  const notesContainer = document.getElementById('notes-container');
+  const startFireworks = document.getElementById('startFireworks');
+
   heart.addEventListener('click', () => {
     letter.classList.remove('hidden');
   });
+});
 
   const coords = [
     [0.5, 0.24],[0.5, 0.23],[0.50, 0.21],[0.51, 0.18],[0.53, 0.14],[0.56, 0.11],
