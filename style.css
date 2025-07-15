@@ -121,8 +121,8 @@ button.next-btn {
 }
 
 .note-heart {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   position: absolute;
   transform: rotate(-45deg);
   cursor: pointer;
@@ -131,8 +131,8 @@ button.next-btn {
 .note-heart::before,
 .note-heart::after {
   content: "";
-  width: 20px;
-  height: 20px;
+  width:  18px;
+  height: 18px;
   border-radius: 50%;
   position: absolute;
 }
