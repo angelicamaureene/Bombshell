@@ -63,11 +63,11 @@ By my calculations if you are reading this on the 15th, we would have been toget
   <script src="notes.js"></script>
   <script src="script.js"></script>
   
-  <!-- Note Modal -->
-<div id="noteModal" class="modal hidden">
+ <!-- Modal for showing the note -->
+<div class="modal hidden" id="noteModal">
   <div class="modal-content">
-    <span id="modalClose" class="close">&times;</span>
-    <p id="modalMessage"></p>
+    <span class="close" onclick="document.getElementById('noteModal').classList.add('hidden')">&times;</span>
+    <p id="modalMessage">Your note will appear here!</p>
   </div>
 </div>
 
